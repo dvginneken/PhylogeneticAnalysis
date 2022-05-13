@@ -12,6 +12,5 @@ dependencies:
   - r-base =4.0.2
   - biopython=1.79
   - r-ape=5.6
-  - r-tidyr=1.2.0
   - r-stringr=1.4.0
-  - r-scales=1.2.0
+

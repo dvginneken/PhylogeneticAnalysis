@@ -4,7 +4,7 @@ SAMPLES, = glob_wildcards(config['haplotype_folder']+"/{id}.fa")
 
 rule all:
     input:
-        config['output_dir']+"/aligned.fa.phylip_phyml_tree.txt"
+         config['output_dir']+"/rooted_tree.txt"
 
 rule concatenate:
     input:
@@ -38,3 +38,11 @@ rule phyml:
         config['output_dir']+"/aligned.fa.phylip_phyml_tree.txt"
     shell:
         "phyml -i {input} -b 100 --n_rand_starts 5 --quiet --no_memory_check --leave_duplicates"
+
+rule root:
+    input:
+        config['output_dir']+"/aligned.fa.phylip_phyml_tree.txt",
+    output:
+        config['output_dir']+"/rooted_tree.txt"
+    script:
+        "RootTree.R"
