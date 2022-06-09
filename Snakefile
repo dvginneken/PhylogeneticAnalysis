@@ -21,7 +21,7 @@ rule align:
     output:
         config['output_dir']+"/aligned.fa"
     shell:
-        "clustalw -INFILE={input} -ALIGN -OUTFILE={output} -OUTPUT=FASTA -OUTORDER=INPUT -QUIET"
+        "clustalo --infile={input} --outfile={output} -OUTPUT=FASTA --output-order=input-order --iter=50 --force"
 
 rule phylip:
     input:
