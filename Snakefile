@@ -13,7 +13,7 @@ rule concatenate:
         config['output_dir']+"/concatenated.fa"
     shell: 
         "cat {config[oldest_consensus]} > {output} ;"
-        "cat {input.haplotypes} >> {output}"
+        "cat {input.haplotypes} | sed '$ s/.$//' >> {output}"
 
 rule align:
     input:
@@ -21,7 +21,7 @@ rule align:
     output:
         config['output_dir']+"/aligned.fa"
     shell:
-        "clustalo --infile={input} --outfile={output} -OUTPUT=FASTA --output-order=input-order --iter=50 --force"
+        "clustalo --infile={input} --outfile={output} --output-order=input-order --iter=50"
 
 rule phylip:
     input:
