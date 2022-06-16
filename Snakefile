@@ -21,7 +21,8 @@ rule align:
     output:
         config['output_dir']+"/aligned.fa"
     shell:
-        "clustalo --infile={input} --outfile={output} --output-order=input-order --iter=50"
+        "clustalo -i {input} --profile1 /hpc/dla_lti/dvanginneken/HaploHIV_Daphne/haplohiv4/reference_sequences/CONSENSUS_B.fa \
+         -o {output} --dealign --full --full-iter --output-order=input-order --iter=50"
 
 rule phylip:
     input:
