@@ -15,14 +15,25 @@ rule concatenate:
         "cat {config[oldest_consensus]} > {output} ;"
         "cat {input.haplotypes} | sed '$ s/.$//' >> {output}"
 
-rule align:
+rule dealign:
     input:
         config['output_dir']+"/concatenated.fa"
     output:
+        config['output_dir']+"/dealigned.fa"
+    shell:
+        "seqkit seq -g {input} > {output}" 
+
+rule align:
+    input:
+        config['output_dir']+"/dealigned.fa"
+    output:
         config['output_dir']+"/aligned.fa"
     shell:
-        "clustalo -i {input} --profile1 /hpc/dla_lti/dvanginneken/HaploHIV_Daphne/haplohiv4/reference_sequences/CONSENSUS_B.fa \
-         -o {output} --dealign --full --full-iter --output-order=input-order --iter=50"
+        """
+        clustalo -i {input} --profile1 /hpc/dla_lti/dvanginneken/HaploHIV_Daphne/haplohiv4/reference_sequences/CONSENSUS_B.fa \
+         --full --full-iter -o {output} --output-order=input-order --iter=50;
+        seqkit grep -n -v  -p CONSENSUS_B {output} > {output}
+        """
 
 rule phylip:
     input:
