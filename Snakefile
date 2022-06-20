@@ -31,8 +31,8 @@ rule align:
     shell:
         """
         clustalo -i {input} --profile1 /hpc/dla_lti/dvanginneken/HaploHIV_Daphne/haplohiv4/reference_sequences/CONSENSUS_B.fa \
-         --full --full-iter -o config[output_dir]/aligned_incl.fa --output-order=input-order --iter=50;
-        seqkit grep -n -v -p "CONSENSUS_B" config[output_dir]/aligned_incl.fa -o {output}
+         --full --full-iter -o {config[output_dir]}/aligned_incl.fa --output-order=input-order --iter=50;
+        seqkit grep -n -v -p "CONSENSUS_B" {config[output_dir]}/aligned_incl.fa -o {output}
         """
 
 rule phylip:
