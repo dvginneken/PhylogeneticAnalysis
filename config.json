@@ -1,5 +1,5 @@
 {
-    "haplotype_folder": "/hpc/dla_lti/dvanginneken/HaploHIV_Daphne/haplohiv4/patient4_out/haplotype",
-    "oldest_consensus": "/hpc/dla_lti/dvanginneken/HaploHIV_Daphne/haplohiv4/patient4_out/consensus/4w-14r1_S63_L001.fa",
-    "output_dir": "patient4"
+    "haplotype_folder": "haplotype directory",
+    "oldest_consensus": "/hpc/.../haplohiv_out/consensus/sample.fa",
+    "output_dir": "output"
 }
