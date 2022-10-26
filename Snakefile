@@ -6,6 +6,7 @@ rule all:
     input:
          config['output_dir']+"/rooted_tree.txt"
 
+#Concatenate haplotypes and oldest sample consensus
 rule concatenate:
     input:
         haplotypes = expand("{prefix}/{samples}.fa", prefix=config['haplotype_folder'], samples=SAMPLES)
@@ -15,6 +16,7 @@ rule concatenate:
         "cat {config[oldest_consensus]} > {output} ;"
         "cat {input.haplotypes} | sed '$ s/.$//' >> {output}"
 
+#Dealign sequences
 rule dealign:
     input:
         config['output_dir']+"/concatenated.fa"
@@ -23,6 +25,7 @@ rule dealign:
     shell:
         "seqkit seq -g {input} > {output}" 
 
+#Align sequences
 rule align:
     input:
         config['output_dir']+"/dealigned.fa"
@@ -32,8 +35,8 @@ rule align:
         """
         mafft --globalpair --maxiterate 500 {input} > {output}
         """
-#        clustalo -i {input} --full --full-iter -o {config[output_dir]}/aligned_incl.fa --iter=100;
 
+#Create phylip file
 rule phylip:
     input:
          config['output_dir']+"/aligned.fa"
@@ -42,6 +45,7 @@ rule phylip:
     shell:
         "python fasta2phylip.py -i {input} -r"
 
+#Create phylogenetic tree with PhyML
 rule phyml:
     input:
         config['output_dir']+"/aligned.fa.phylip"
@@ -50,6 +54,7 @@ rule phyml:
     shell:
         "phyml -i {input} -b 100 --n_rand_starts 5 --quiet --no_memory_check --leave_duplicates"
 
+#Root the tree
 rule root:
     input:
         config['output_dir']+"/aligned.fa.phylip_phyml_tree.txt",
