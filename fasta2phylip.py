@@ -4,7 +4,6 @@ import argparse
 from Bio import AlignIO
 import sys
 
-version = "0.1.1 (28.11.17)"
 name = os.path.basename(sys.argv[0]) #get scriptname from actual script filename that was called
 parser=argparse.ArgumentParser(description="Converts alignments in FastaFormat to (strict & interleaved; relaxed & interleaved if '-r' is set) phylip format. Will raise error if alignments contain dots (\".\"), so replace those with dashes (\"-\") beforehand (e.g. using sed)")
 parser.add_argument('-i','--input', action = "store", dest = "input", required = True, help = "(aligned) input fasta")
